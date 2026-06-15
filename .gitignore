@@ -1,0 +1,31 @@
+# Dependencies
+node_modules/
+
+# Next.js
+.next/
+out/
+
+# Build artifacts
+build/
+dist/
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Testing
+coverage/
+playwright-report/
+test-results/
+
+# Misc
+.DS_Store
+*.pem
+npm-debug.log*
+
+# Analysis
+.next/analyze/
+
+# Claude review output
+.github/review-result.json
