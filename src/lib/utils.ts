@@ -12,8 +12,11 @@ export function formatDate(dateStr: string): string {
 export function formatDateTime(dateStr: string): string {
   const d = new Date(dateStr)
   return d.toLocaleString('ja-JP', {
-    year: 'numeric', month: 'long', day: 'numeric',
-    hour: '2-digit', minute: '2-digit',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
   })
 }
 
@@ -23,10 +26,14 @@ export function houseLabel(house: 'shugiin' | 'sangin'): string {
 
 export function recordTypeLabel(type: string): string {
   switch (type) {
-    case 'plenary': return '本会議'
-    case 'committee': return '委員会'
-    case 'special': return '特別委員会'
-    default: return type
+    case 'plenary':
+      return '本会議'
+    case 'committee':
+      return '委員会'
+    case 'special':
+      return '特別委員会'
+    default:
+      return type
   }
 }
 

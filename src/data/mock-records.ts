@@ -189,7 +189,7 @@ export const MOCK_RECORDS: DiaryRecord[] = [
 ]
 
 export function getRecord(id: string): DiaryRecord | undefined {
-  return MOCK_RECORDS.find(r => r.id === id)
+  return MOCK_RECORDS.find((r) => r.id === id)
 }
 
 export function getLatestRecords(limit = 6): DiaryRecord[] {
@@ -199,9 +199,9 @@ export function getLatestRecords(limit = 6): DiaryRecord[] {
 }
 
 export function getRecordsByHouse(house: 'shugiin' | 'sangin'): DiaryRecord[] {
-  return MOCK_RECORDS.filter(r => r.house === house)
+  return MOCK_RECORDS.filter((r) => r.house === house)
 }
 
 export function getRecordsByCommittee(committee: string): DiaryRecord[] {
-  return MOCK_RECORDS.filter(r => r.committee === committee)
+  return MOCK_RECORDS.filter((r) => r.committee === committee)
 }

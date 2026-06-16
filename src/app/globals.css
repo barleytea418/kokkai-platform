@@ -10,7 +10,12 @@
     @apply bg-gray-50 text-gray-900 antialiased;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     @apply font-semibold;
   }
 }
@@ -31,7 +36,7 @@
   }
 
   .prose-kokkai {
-    @apply text-gray-800 leading-relaxed;
+    @apply leading-relaxed text-gray-800;
   }
 
   .prose-kokkai p {

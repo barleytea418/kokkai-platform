@@ -9,13 +9,15 @@ import { useState } from 'react'
 export default function PressConferenceDetailPage() {
   const { id } = useParams<{ id: string }>()
   const [activeTab, setActiveTab] = useState<'summary' | 'transcript' | 'video'>('summary')
-  const conference = MOCK_PRESS_CONFERENCES.find(p => p.id === id)
+  const conference = MOCK_PRESS_CONFERENCES.find((p) => p.id === id)
 
   if (!conference) {
     return (
-      <div className="max-w-4xl mx-auto px-4 py-20 text-center">
-        <h1 className="text-2xl font-bold text-gray-800 mb-4">記者会見が見つかりません</h1>
-        <Link href="/press-conference" className="text-blue-600 hover:underline">一覧に戻る</Link>
+      <div className="mx-auto max-w-4xl px-4 py-20 text-center">
+        <h1 className="mb-4 text-2xl font-bold text-gray-800">記者会見が見つかりません</h1>
+        <Link href="/press-conference" className="text-blue-600 hover:underline">
+          一覧に戻る
+        </Link>
       </div>
     )
   }
@@ -28,26 +30,30 @@ export default function PressConferenceDetailPage() {
   ]
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8">
-      <div className="flex items-center gap-2 text-sm text-gray-500 mb-6">
-        <Link href="/" className="hover:text-blue-600">ホーム</Link>
+    <div className="mx-auto max-w-4xl px-4 py-8">
+      <div className="mb-6 flex items-center gap-2 text-sm text-gray-500">
+        <Link href="/" className="hover:text-blue-600">
+          ホーム
+        </Link>
         <span>/</span>
-        <Link href="/press-conference" className="hover:text-blue-600">記者会見</Link>
+        <Link href="/press-conference" className="hover:text-blue-600">
+          記者会見
+        </Link>
         <span>/</span>
-        <span className="text-gray-800 truncate">{conference.title}</span>
+        <span className="truncate text-gray-800">{conference.title}</span>
       </div>
 
       {/* Conference header */}
-      <div className="bg-white rounded-xl border border-gray-200 p-6 mb-6">
-        <div className="flex items-center gap-4 mb-4">
+      <div className="mb-6 rounded-xl border border-gray-200 bg-white p-6">
+        <div className="mb-4 flex items-center gap-4">
           <div
-            className="w-14 h-14 rounded-full flex items-center justify-center text-white text-xl font-bold flex-shrink-0"
+            className="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-full text-xl font-bold text-white"
             style={{ backgroundColor: color }}
           >
             {conference.speakerName.slice(0, 1)}
           </div>
           <div>
-            <div className="flex items-center gap-2 mb-1">
+            <div className="mb-1 flex items-center gap-2">
               <h1 className="text-xl font-bold text-gray-900">{conference.speakerName}</h1>
               <PartyBadge party={conference.party} />
             </div>
@@ -55,12 +61,14 @@ export default function PressConferenceDetailPage() {
           </div>
         </div>
 
-        <h2 className="text-lg font-semibold text-gray-800 mb-2">{conference.title}</h2>
-        <p className="text-sm text-gray-400 mb-4">{formatDate(conference.date)} · 約{conference.duration}分</p>
+        <h2 className="mb-2 text-lg font-semibold text-gray-800">{conference.title}</h2>
+        <p className="mb-4 text-sm text-gray-400">
+          {formatDate(conference.date)} · 約{conference.duration}分
+        </p>
 
         <div className="flex flex-wrap gap-2">
-          {conference.topics.map(t => (
-            <span key={t} className="text-sm bg-gray-100 text-gray-600 px-3 py-1 rounded-full">
+          {conference.topics.map((t) => (
+            <span key={t} className="rounded-full bg-gray-100 px-3 py-1 text-sm text-gray-600">
               {t}
             </span>
           ))}
@@ -68,12 +76,12 @@ export default function PressConferenceDetailPage() {
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-1 mb-6 border-b border-gray-200">
-        {tabs.map(tab => (
+      <div className="mb-6 flex gap-1 border-b border-gray-200">
+        {tabs.map((tab) => (
           <button
             key={tab.key}
             onClick={() => setActiveTab(tab.key)}
-            className={`flex items-center gap-1.5 px-4 py-3 text-sm font-medium border-b-2 transition-colors ${
+            className={`flex items-center gap-1.5 border-b-2 px-4 py-3 text-sm font-medium transition-colors ${
               activeTab === tab.key
                 ? 'border-blue-600 text-blue-600'
                 : 'border-transparent text-gray-500 hover:text-gray-800'
@@ -86,28 +94,28 @@ export default function PressConferenceDetailPage() {
       </div>
 
       {activeTab === 'summary' && (
-        <div className="bg-white rounded-xl border border-gray-200 p-6">
-          <div className="flex items-center gap-2 mb-5 pb-4 border-b border-gray-100">
+        <div className="rounded-xl border border-gray-200 bg-white p-6">
+          <div className="mb-5 flex items-center gap-2 border-b border-gray-100 pb-4">
             <span className="text-xl">🤖</span>
             <div>
               <h3 className="font-bold text-gray-900">AI生成要約</h3>
               <p className="text-xs text-gray-400">発言内容をもとに要点を整理しています</p>
             </div>
           </div>
-          <p className="text-sm text-gray-700 leading-relaxed whitespace-pre-line">
+          <p className="whitespace-pre-line text-sm leading-relaxed text-gray-700">
             {conference.summary}
           </p>
         </div>
       )}
 
       {activeTab === 'transcript' && (
-        <div className="bg-white rounded-xl border border-gray-200 p-6">
-          <h3 className="font-bold text-gray-900 mb-5 pb-4 border-b border-gray-100">
+        <div className="rounded-xl border border-gray-200 bg-white p-6">
+          <h3 className="mb-5 border-b border-gray-100 pb-4 font-bold text-gray-900">
             発言文字起こし
           </h3>
-          <div className="text-sm text-gray-700 leading-relaxed whitespace-pre-line font-mono">
+          <div className="whitespace-pre-line font-mono text-sm leading-relaxed text-gray-700">
             {conference.transcript}
-            <div className="mt-6 text-gray-400 text-center border-t border-gray-200 pt-4 text-xs not-italic">
+            <div className="mt-6 border-t border-gray-200 pt-4 text-center text-xs not-italic text-gray-400">
               （続き：動画タブよりご確認ください）
             </div>
           </div>
@@ -115,7 +123,7 @@ export default function PressConferenceDetailPage() {
       )}
 
       {activeTab === 'video' && conference.youtubeVideoId && (
-        <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
+        <div className="overflow-hidden rounded-xl border border-gray-200 bg-white">
           <div className="aspect-video bg-black">
             <iframe
               width="100%"
@@ -124,7 +132,7 @@ export default function PressConferenceDetailPage() {
               title="記者会見動画"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
-              className="w-full h-full"
+              className="h-full w-full"
             />
           </div>
         </div>

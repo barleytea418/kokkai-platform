@@ -135,10 +135,11 @@ export const MOCK_MEMBERS: Member[] = [
 
 export function searchMembers(query: string): Member[] {
   const q = query.toLowerCase()
-  return MOCK_MEMBERS.filter(m =>
-    m.name.includes(q) ||
-    m.nameKana.includes(q) ||
-    m.party.includes(q) ||
-    m.constituency.includes(q)
+  return MOCK_MEMBERS.filter(
+    (m) =>
+      m.name.includes(q) ||
+      m.nameKana.includes(q) ||
+      m.party.includes(q) ||
+      m.constituency.includes(q)
   )
 }

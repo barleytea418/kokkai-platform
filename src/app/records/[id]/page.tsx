@@ -15,9 +15,11 @@ export default function RecordDetailPage() {
 
   if (!record) {
     return (
-      <div className="max-w-4xl mx-auto px-4 py-20 text-center">
-        <h1 className="text-2xl font-bold text-gray-800 mb-4">議事録が見つかりません</h1>
-        <Link href="/" className="text-blue-600 hover:underline">ホームに戻る</Link>
+      <div className="mx-auto max-w-4xl px-4 py-20 text-center">
+        <h1 className="mb-4 text-2xl font-bold text-gray-800">議事録が見つかりません</h1>
+        <Link href="/" className="text-blue-600 hover:underline">
+          ホームに戻る
+        </Link>
       </div>
     )
   }
@@ -34,37 +36,43 @@ export default function RecordDetailPage() {
   const summaryLines = record.summary.split('\n').filter(Boolean)
 
   return (
-    <div className="max-w-5xl mx-auto px-4 py-8">
+    <div className="mx-auto max-w-5xl px-4 py-8">
       {/* Breadcrumb */}
-      <div className="flex items-center gap-2 text-sm text-gray-500 mb-6">
-        <Link href="/" className="hover:text-blue-600">ホーム</Link>
+      <div className="mb-6 flex items-center gap-2 text-sm text-gray-500">
+        <Link href="/" className="hover:text-blue-600">
+          ホーム
+        </Link>
         <span>/</span>
         <Link href={`/${record.house}`} className="hover:text-blue-600">
           {houseLabel(record.house)}
         </Link>
         <span>/</span>
-        <span className="text-gray-800 truncate">{record.title}</span>
+        <span className="truncate text-gray-800">{record.title}</span>
       </div>
 
       {/* Record header */}
-      <div className="bg-white rounded-xl border border-gray-200 p-6 mb-6">
-        <div className="flex flex-wrap items-center gap-2 mb-3">
-          <span className={`text-xs font-semibold px-2.5 py-1 rounded text-white ${houseBg}`}>
+      <div className="mb-6 rounded-xl border border-gray-200 bg-white p-6">
+        <div className="mb-3 flex flex-wrap items-center gap-2">
+          <span className={`rounded px-2.5 py-1 text-xs font-semibold text-white ${houseBg}`}>
             {houseLabel(record.house)}
           </span>
-          <span className="text-xs font-medium px-2 py-0.5 rounded border bg-gray-50 text-gray-600 border-gray-200">
-            {recordTypeLabel(record.type)}{record.committee && ` / ${record.committee}`}
+          <span className="rounded border border-gray-200 bg-gray-50 px-2 py-0.5 text-xs font-medium text-gray-600">
+            {recordTypeLabel(record.type)}
+            {record.committee && ` / ${record.committee}`}
           </span>
           <span className="text-xs text-gray-400">第{record.sessionNumber}回国会</span>
         </div>
 
-        <h1 className="text-xl font-bold text-gray-900 mb-2">{record.title}</h1>
-        <p className="text-sm text-gray-500 mb-4">{formatDate(record.date)}</p>
+        <h1 className="mb-2 text-xl font-bold text-gray-900">{record.title}</h1>
+        <p className="mb-4 text-sm text-gray-500">{formatDate(record.date)}</p>
 
         {/* Topics */}
-        <div className="flex flex-wrap gap-2 mb-4">
-          {record.topics.map(t => (
-            <span key={t} className="text-sm bg-blue-50 text-blue-700 border border-blue-200 px-3 py-1 rounded-full">
+        <div className="mb-4 flex flex-wrap gap-2">
+          {record.topics.map((t) => (
+            <span
+              key={t}
+              className="rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-sm text-blue-700"
+            >
               {t}
             </span>
           ))}
@@ -72,13 +80,15 @@ export default function RecordDetailPage() {
 
         {/* Vote result */}
         {record.votes && (
-          <div className="bg-gray-50 rounded-lg p-4">
-            <div className="flex items-center gap-3 mb-2">
-              <span className={`text-sm font-semibold px-2.5 py-1 rounded ${
-                record.votes.passed
-                  ? 'bg-emerald-100 text-emerald-700'
-                  : 'bg-red-100 text-red-700'
-              }`}>
+          <div className="rounded-lg bg-gray-50 p-4">
+            <div className="mb-2 flex items-center gap-3">
+              <span
+                className={`rounded px-2.5 py-1 text-sm font-semibold ${
+                  record.votes.passed
+                    ? 'bg-emerald-100 text-emerald-700'
+                    : 'bg-red-100 text-red-700'
+                }`}
+              >
                 {record.votes.passed ? '✓ 可決' : '✗ 否決'}
               </span>
               <span className="text-sm text-gray-600">
@@ -86,18 +96,24 @@ export default function RecordDetailPage() {
                 {record.votes.abstain > 0 && `　棄権 ${record.votes.abstain}`}
               </span>
             </div>
-            <div className="flex gap-1 h-2 rounded-full overflow-hidden">
+            <div className="flex h-2 gap-1 overflow-hidden rounded-full">
               <div
-                className="bg-blue-500 h-full transition-all"
-                style={{ width: `${(record.votes.yes / (record.votes.yes + record.votes.no + record.votes.abstain)) * 100}%` }}
+                className="h-full bg-blue-500 transition-all"
+                style={{
+                  width: `${(record.votes.yes / (record.votes.yes + record.votes.no + record.votes.abstain)) * 100}%`,
+                }}
               />
               <div
-                className="bg-red-400 h-full"
-                style={{ width: `${(record.votes.no / (record.votes.yes + record.votes.no + record.votes.abstain)) * 100}%` }}
+                className="h-full bg-red-400"
+                style={{
+                  width: `${(record.votes.no / (record.votes.yes + record.votes.no + record.votes.abstain)) * 100}%`,
+                }}
               />
               <div
-                className="bg-gray-200 h-full"
-                style={{ width: `${(record.votes.abstain / (record.votes.yes + record.votes.no + record.votes.abstain)) * 100}%` }}
+                className="h-full bg-gray-200"
+                style={{
+                  width: `${(record.votes.abstain / (record.votes.yes + record.votes.no + record.votes.abstain)) * 100}%`,
+                }}
               />
             </div>
           </div>
@@ -105,12 +121,12 @@ export default function RecordDetailPage() {
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-1 mb-6 border-b border-gray-200">
-        {tabs.map(tab => (
+      <div className="mb-6 flex gap-1 border-b border-gray-200">
+        {tabs.map((tab) => (
           <button
             key={tab.key}
             onClick={() => setActiveTab(tab.key)}
-            className={`flex items-center gap-1.5 px-4 py-3 text-sm font-medium border-b-2 transition-colors ${
+            className={`flex items-center gap-1.5 border-b-2 px-4 py-3 text-sm font-medium transition-colors ${
               activeTab === tab.key
                 ? 'border-blue-600 text-blue-600'
                 : 'border-transparent text-gray-500 hover:text-gray-800'
@@ -124,8 +140,8 @@ export default function RecordDetailPage() {
 
       {/* Tab content */}
       {activeTab === 'summary' && (
-        <div className="bg-white rounded-xl border border-gray-200 p-6">
-          <div className="flex items-center gap-2 mb-5 pb-4 border-b border-gray-100">
+        <div className="rounded-xl border border-gray-200 bg-white p-6">
+          <div className="mb-5 flex items-center gap-2 border-b border-gray-100 pb-4">
             <span className="text-xl">🤖</span>
             <div>
               <h2 className="font-bold text-gray-900">AI生成要約（3分で読める）</h2>
@@ -137,21 +153,21 @@ export default function RecordDetailPage() {
             {summaryLines.map((line, i) => {
               if (line.startsWith('【') && line.endsWith('】')) {
                 return (
-                  <h3 key={i} className="font-bold text-gray-800 mt-5 mb-2 text-base">
+                  <h3 key={i} className="mb-2 mt-5 text-base font-bold text-gray-800">
                     {line}
                   </h3>
                 )
               }
               if (line.startsWith('①') || line.startsWith('②') || line.startsWith('③')) {
                 return (
-                  <div key={i} className="flex gap-2 mb-2 text-sm text-gray-700">
-                    <span className="font-bold text-blue-600 flex-shrink-0">{line[0]}</span>
+                  <div key={i} className="mb-2 flex gap-2 text-sm text-gray-700">
+                    <span className="flex-shrink-0 font-bold text-blue-600">{line[0]}</span>
                     <span>{line.slice(1)}</span>
                   </div>
                 )
               }
               return (
-                <p key={i} className="text-sm text-gray-700 mb-3 leading-relaxed">
+                <p key={i} className="mb-3 text-sm leading-relaxed text-gray-700">
                   {line}
                 </p>
               )
@@ -159,14 +175,16 @@ export default function RecordDetailPage() {
           </div>
 
           {/* Keywords */}
-          <div className="mt-6 pt-5 border-t border-gray-100">
-            <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">主なキーワード</h3>
+          <div className="mt-6 border-t border-gray-100 pt-5">
+            <h3 className="mb-3 text-xs font-semibold uppercase tracking-wide text-gray-500">
+              主なキーワード
+            </h3>
             <div className="flex flex-wrap gap-2">
-              {record.keywords.map(kw => (
+              {record.keywords.map((kw) => (
                 <Link
                   key={kw}
                   href={`/search?q=${encodeURIComponent(kw)}`}
-                  className="text-sm bg-gray-100 hover:bg-blue-50 text-gray-600 hover:text-blue-700 px-3 py-1 rounded-full transition-colors"
+                  className="rounded-full bg-gray-100 px-3 py-1 text-sm text-gray-600 transition-colors hover:bg-blue-50 hover:text-blue-700"
                 >
                   {kw}
                 </Link>
@@ -175,7 +193,7 @@ export default function RecordDetailPage() {
           </div>
 
           {/* Source link */}
-          <div className="mt-5 pt-4 border-t border-gray-100 flex items-center justify-between text-xs text-gray-400">
+          <div className="mt-5 flex items-center justify-between border-t border-gray-100 pt-4 text-xs text-gray-400">
             <span>一次情報源：衆議院公式サイト（議事録）</span>
             <a
               href={record.sourceUrl}
@@ -184,8 +202,13 @@ export default function RecordDetailPage() {
               className="flex items-center gap-1 text-blue-500 hover:underline"
             >
               原文を確認
-              <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+              <svg className="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                />
               </svg>
             </a>
           </div>
@@ -193,24 +216,29 @@ export default function RecordDetailPage() {
       )}
 
       {activeTab === 'full' && (
-        <div className="bg-white rounded-xl border border-gray-200 p-6">
-          <div className="flex items-center justify-between mb-5 pb-4 border-b border-gray-100">
+        <div className="rounded-xl border border-gray-200 bg-white p-6">
+          <div className="mb-5 flex items-center justify-between border-b border-gray-100 pb-4">
             <h2 className="font-bold text-gray-900">全議事録</h2>
             <a
               href={record.sourceUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-xs text-blue-500 hover:underline flex items-center gap-1"
+              className="flex items-center gap-1 text-xs text-blue-500 hover:underline"
             >
               公式サイトで見る
-              <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+              <svg className="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                />
               </svg>
             </a>
           </div>
-          <div className="bg-gray-50 rounded-lg p-4 font-mono text-sm text-gray-700 whitespace-pre-wrap leading-relaxed">
+          <div className="whitespace-pre-wrap rounded-lg bg-gray-50 p-4 font-mono text-sm leading-relaxed text-gray-700">
             {record.fullText}
-            <div className="mt-6 text-gray-400 text-center border-t border-gray-200 pt-4">
+            <div className="mt-6 border-t border-gray-200 pt-4 text-center text-gray-400">
               （続き：公式サイトでご確認ください）
             </div>
           </div>
@@ -218,18 +246,21 @@ export default function RecordDetailPage() {
       )}
 
       {activeTab === 'speeches' && (
-        <div className="bg-white rounded-xl border border-gray-200 p-6">
-          <h2 className="font-bold text-gray-900 mb-5 pb-4 border-b border-gray-100">
+        <div className="rounded-xl border border-gray-200 bg-white p-6">
+          <h2 className="mb-5 border-b border-gray-100 pb-4 font-bold text-gray-900">
             議員別発言一覧
           </h2>
           <div className="space-y-4">
             {record.speakers.map((speaker, i) => (
-              <div key={i} className="flex items-start gap-4 p-4 rounded-lg hover:bg-gray-50 transition-colors">
-                <div className="flex-shrink-0 w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center font-bold text-gray-600">
+              <div
+                key={i}
+                className="flex items-start gap-4 rounded-lg p-4 transition-colors hover:bg-gray-50"
+              >
+                <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-gray-200 font-bold text-gray-600">
                   {speaker.name.slice(0, 1)}
                 </div>
                 <div className="flex-1">
-                  <div className="flex items-center gap-2 flex-wrap mb-1">
+                  <div className="mb-1 flex flex-wrap items-center gap-2">
                     <span className="font-semibold text-gray-900">{speaker.name}</span>
                     <PartyBadge party={speaker.party} size="sm" />
                     <span className="text-xs text-gray-400">{speaker.position}</span>
@@ -238,7 +269,7 @@ export default function RecordDetailPage() {
                 </div>
                 <Link
                   href={`/members?q=${encodeURIComponent(speaker.name)}`}
-                  className="text-xs text-blue-600 hover:underline flex-shrink-0"
+                  className="flex-shrink-0 text-xs text-blue-600 hover:underline"
                 >
                   議員情報
                 </Link>
@@ -249,7 +280,7 @@ export default function RecordDetailPage() {
       )}
 
       {activeTab === 'video' && record.youtubeVideoId && (
-        <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
+        <div className="overflow-hidden rounded-xl border border-gray-200 bg-white">
           <div className="aspect-video bg-black">
             <iframe
               width="100%"
@@ -258,7 +289,7 @@ export default function RecordDetailPage() {
               title="国会審議動画"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
-              className="w-full h-full"
+              className="h-full w-full"
             />
           </div>
           <div className="p-4">

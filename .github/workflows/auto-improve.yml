@@ -4,7 +4,7 @@ on:
   push:
     branches: [main]
   schedule:
-    - cron: '0 2 * * 1'  # 月曜 02:00 UTC（毎週）
+    - cron: '0 2 * * 1' # 月曜 02:00 UTC（毎週）
   workflow_dispatch:
     inputs:
       target:

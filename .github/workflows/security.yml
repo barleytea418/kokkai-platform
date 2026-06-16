@@ -6,7 +6,7 @@ on:
   pull_request:
     branches: [main]
   schedule:
-    - cron: '0 3 * * 0'  # 日曜 03:00 UTC（毎週）
+    - cron: '0 3 * * 0' # 日曜 03:00 UTC（毎週）
 
 permissions:
   contents: read

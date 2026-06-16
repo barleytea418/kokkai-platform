@@ -10,9 +10,5 @@ module.exports = createJestConfig({
   },
   testMatch: ['<rootDir>/src/**/*.test.{ts,tsx}'],
   coverageDirectory: 'coverage',
-  collectCoverageFrom: [
-    'src/**/*.{ts,tsx}',
-    '!src/**/*.d.ts',
-    '!src/app/layout.tsx',
-  ],
+  collectCoverageFrom: ['src/**/*.{ts,tsx}', '!src/**/*.d.ts', '!src/app/layout.tsx'],
 })

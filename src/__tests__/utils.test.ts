@@ -20,6 +20,6 @@ describe('getPartyColor', () => {
     expect(getPartyColor('自由民主党')).toMatch(/^#/)
   })
   it('未知の政党はデフォルトカラーを返す', () => {
-    expect(getPartyColor('存在しない党')).toBe('#6b7280')
+    expect(getPartyColor('存在しない党')).toBe('#6B7280')
   })
 })
