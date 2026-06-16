@@ -1,29 +1,20 @@
 name: Auto Improve
 
 on:
-  push:
-    branches: [main]
   schedule:
     - cron: '0 2 * * 1' # 月曜 02:00 UTC（毎週）
   workflow_dispatch:
-    inputs:
-      target:
-        description: 'レビュー対象 (all / diff)'
-        required: false
-        default: diff
 
 permissions:
   contents: write
   pull-requests: write
 
 jobs:
-  claude-review:
-    name: Claude AI Code Review
+  auto-fix:
+    name: ESLint + Prettier 自動修正
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
       - uses: actions/setup-node@v4
         with:
@@ -32,30 +23,25 @@ jobs:
 
       - run: npm ci
 
-      - name: Install Anthropic SDK
-        run: npm install --no-save @anthropic-ai/sdk
+      - name: Prettier
+        run: npm run format
 
-      - name: Run Claude Review
-        id: review
-        run: node .github/scripts/claude-review.js
-        env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          TARGET: ${{ github.event.inputs.target || 'diff' }}
+      - name: ESLint auto-fix
+        run: npm run lint:fix
+        continue-on-error: true
 
-      - name: Apply Safe Auto-fixes
-        if: steps.review.outputs.has_fixes == 'true'
-        run: node .github/scripts/apply-fixes.js
-        env:
-          FIXES_JSON: ${{ steps.review.outputs.fixes_json }}
-
-      - name: Create PR
-        if: steps.review.outputs.has_fixes == 'true'
+      - name: Create PR if changed
         uses: peter-evans/create-pull-request@v6
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           branch: auto-improve/${{ github.run_number }}
-          title: '🤖 自動改善提案 #${{ github.run_number }}'
-          body: ${{ steps.review.outputs.pr_body }}
-          labels: auto-improve, claude-ai
-          commit-message: 'chore: Claude AI による自動改善'
+          title: 'chore: 自動フォーマット修正 #${{ github.run_number }}'
+          body: |
+            ## 自動修正内容
+
+            - Prettier によるコードフォーマット
+            - ESLint による自動修正
+
+            *毎週月曜に自動実行されます*
+          labels: auto-improve
+          commit-message: 'chore: Prettier + ESLint 自動修正'
